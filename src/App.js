@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { connect } from 'react-redux';
+import { handleInitialData } from './actions/Shared';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import PrivateRoute from "./components/PrivateRoute";
+import QuestionList from "./components/QuestionList";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import LoginDisplay from './components/Login';
+
+class App extends React.Component {
+    componentDidMount () {
+        this.props.handleInitialData();
+    }
+
+    render () {
+        return (
+            <Switch>
+                <PrivateRoute path='/question_list' component={QuestionList}/>
+                <Route path="/login" component={LoginDisplay}/>
+                <Route exact path='/' render={() => (
+                    <Redirect
+                        to='/question_list'
+                    />
+                )}/>
+            </Switch>
+        );
+    }
 }
 
-export default App;
+const mapDispatchApp = (dispatch) => (
+    {
+        handleInitialData: () => (
+            dispatch(handleInitialData())
+        )
+    }
+);
+
+const AppDisplay = connect(
+    null,
+    mapDispatchApp
+)(App);
+
+export default AppDisplay;
