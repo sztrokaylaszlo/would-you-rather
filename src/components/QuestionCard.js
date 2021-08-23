@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import QuestionCardList from "./QuestionCardList";
 
 const styles = theme => ({
     avatarLarge: {
@@ -24,27 +25,22 @@ const styles = theme => ({
 
 class QuestionCard extends React.Component {
     render() {
-        const { classes, question } = this.props;
+        const { classes, question, type } = this.props;
         return (
             <Box style={{width: 'calc(100% - 40px)'}} my="2rem" px="3rem">
                 <Card width={1}>
                     <CardHeader
-                            title={`${question.name} asks`}
+                            title={`${type === 'unanswered' ? `${question.name} asks` : `Asked by ${question.name}` }`}
                             titleTypographyProps={{ align: 'center' }}
                             subheaderTypographyProps={{ align: 'center' }}
                             className={classes.cardHeader}
                     />
                     <CardContent className={classes.cardContainer}>
-                        <Grid item xs={12} md={3}>
-                            <Avatar alt="alt" src={question.avatarURL} className={classes.avatarLarge} />
+                        <Grid container item xs={12} md={3} justifyContent="center" alignItems='center'>
+                            <Avatar alt="alt" src={`/${question.avatarURL}`} className={classes.avatarLarge} />
                         </Grid>
                         <Grid item xs={12} md={9}>
-                            <Typography component="h2" variant="h5">
-                                Would you rather
-                            </Typography>
-                            <div>
-                                {question.optionOne.text}
-                            </div>
+                            {React.createElement(this.props.component, this.props)}
                         </Grid>
                     </CardContent>
                 </Card>

@@ -8,7 +8,7 @@ import QuestionCardContainer from './QuestionCardContainer';
 
 class QuestionList extends React.Component {
     state = {
-        tabValue: 1
+        tabValue: 0
     };
 
     render () {
@@ -24,7 +24,7 @@ class QuestionList extends React.Component {
                         <Tab label="Answered questions"/>
                     </Tabs>
                     {
-                        tabValue === 1 ? (<QuestionCardContainer list={this.props.notAnsweredQuestions}/>) : (
+                        tabValue === 0 ? (<QuestionCardContainer list={this.props.notAnsweredQuestions}/>) : (
                             <QuestionCardContainer list={this.props.answeredQuestions}/>)
                     }
                 </Card>
