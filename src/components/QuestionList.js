@@ -41,8 +41,8 @@ const mapStateToQuestionList = (state) => {
     const notAnsweredQuestions = questions.filter(item => !answeredQuestionIds.hasOwnProperty(item[1]['id']));
     return {
         allQuestions: Object.fromEntries(questions),
-        answeredQuestions: Object.fromEntries(answeredQuestions),
-        notAnsweredQuestions: Object.fromEntries(notAnsweredQuestions)
+        answeredQuestions: Object.fromEntries(answeredQuestions.sort((a,b) =>(a[1].timestamp > b[1].timestamp) ? -1 : 1)),
+        notAnsweredQuestions: Object.fromEntries(notAnsweredQuestions.sort((a,b) =>(a[1].timestamp > b[1].timestamp) ? -1 : 1))
     };
 };
 

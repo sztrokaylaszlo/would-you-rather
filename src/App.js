@@ -5,8 +5,11 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import PrivateRoute from "./components/PrivateRoute";
 import QuestionList from "./components/QuestionList";
 import Question from "./components/Question";
-
+import LeaderBoard from "./components/LeaderBoard";
+import NewQuestion from "./components/NewQuestion";
 import LoginDisplay from './components/Login';
+import LogoutDisplay from "./components/LogoutDisplay";
+import RouteWithMenu from './components/RouteWithMenu';
 
 class App extends React.Component {
     componentDidMount () {
@@ -15,19 +18,29 @@ class App extends React.Component {
 
     render () {
         return (
-            <Switch>
-                <PrivateRoute path='/question_list' component={QuestionList}/>
-                <PrivateRoute path='/question' component={Question}/>
-                <Route path="/login" component={LoginDisplay}/>
-                <Route exact path='/' render={() => (
-                    <Redirect
-                        to='/question_list'
-                    />
-                )}/>
-            </Switch>
+            <div>
+                <Switch>
+                    <PrivateRoute path='/question_list' component={QuestionList}/>
+                    <PrivateRoute path='/question' component={Question}/>
+                    <PrivateRoute path='/leader_board' component={LeaderBoard}/>
+                    <PrivateRoute path='/add' component={NewQuestion}/>
+                    <RouteWithMenu path="/login" component={LoginDisplay}/>
+                    <Route path='/logout' component={LogoutDisplay}/>
+                    <Route exact path='/' render={() => (
+                        <Redirect
+                            to='/question_list'
+                        />
+                    )}/>
+                </Switch>
+            </div>
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        authUser: state.authUser.id
+    };
+};
 
 const mapDispatchApp = (dispatch) => (
     {
@@ -38,7 +51,7 @@ const mapDispatchApp = (dispatch) => (
 );
 
 const AppDisplay = connect(
-    null,
+    mapStateToProps,
     mapDispatchApp
 )(App);
 

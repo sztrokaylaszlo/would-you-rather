@@ -24,7 +24,7 @@ function LinearProgressWithLabel (props) {
 
 class AnsweredQuestionBar extends React.Component {
     render () {
-        const { question, countAnswers, authUser, additionalClass, badge } = this.props;
+        const { question, countAnswers, additionalClass, badge } = this.props;
         const card =
             <Card className={`${styles.answerCard} ${styles[additionalClass]}`}>
                 Would you rather {question.text}
@@ -46,18 +46,12 @@ class AnsweredQuestionBar extends React.Component {
     }
 }
 
-const mapStateToAnsweredQuestionBar = (state) => {
-    return {
-        authUser: state.authUser.id
-    };
-};
-
 const mapDispatchAnsweredQuestionBar = (dispatch) => (
     {}
 );
 
 const AnsweredQuestionBarDisplay = connect(
-    mapStateToAnsweredQuestionBar,
+    null,
     mapDispatchAnsweredQuestionBar
 )(AnsweredQuestionBar);
 

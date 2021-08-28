@@ -8,15 +8,15 @@ class QuestionCardAnswered extends React.Component {
         const countAnswers = question.optionOne.votes.length + question.optionTwo.votes.length;
         let myAnswer = 'optionOne';
         for(let userId in question.optionTwo.votes) {
-            if(question.optionOne.votes[userId] === authUser) {
+            if(question.optionTwo.votes[userId] === authUser) {
                 myAnswer = 'optionTwo';
             }
         }
         return (
             <div>
                 <h2>Results: </h2>
-                <AnsweredQuestionBar question={question.optionOne} countAnswers={countAnswers} additionalClass='greenAnswerCard' badge={true} />
-                <AnsweredQuestionBar question={question.optionTwo} countAnswers={countAnswers} additionalClass='grayAnswerCard' badge={false} />
+                <AnsweredQuestionBar question={question.optionOne} countAnswers={countAnswers} additionalClass='greenAnswerCard' badge={myAnswer === 'optionOne'} />
+                <AnsweredQuestionBar question={question.optionTwo} countAnswers={countAnswers} additionalClass='grayAnswerCard' badge={myAnswer === 'optionTwo'} />
             </div>
         )
     }
