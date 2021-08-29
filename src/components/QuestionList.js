@@ -35,14 +35,25 @@ class QuestionList extends React.Component {
 
 const mapStateToQuestionList = (state) => {
     let questions = state.questions.list;
-    questions = Object.entries(questions).map(item => [item[0], Object.assign({}, item[1], { avatarURL: state.users.list[item[1].author].avatarURL, name:state.users.list[item[1].author].name })]);
-    const answeredQuestionIds = state.users.list[state.authUser.id].answers;
-    const answeredQuestions = questions.filter(item => answeredQuestionIds.hasOwnProperty(item[1]['id']));
-    const notAnsweredQuestions = questions.filter(item => !answeredQuestionIds.hasOwnProperty(item[1]['id']));
+    let answeredQuestions = {};
+    let notAnsweredQuestions = {};
+    let allQuestions = {};
+    if(Object.entries(questions).length>0) {
+        questions = Object.entries(questions).map(item => [item[0], Object.assign({}, item[1], {
+            avatarURL: state.users.list[item[1].author].avatarURL,
+            name: state.users.list[item[1].author].name
+        })]);
+        const answeredQuestionIds = state.users.list[state.authUser.id].answers;
+        answeredQuestions = questions.filter(item => answeredQuestionIds.hasOwnProperty(item[1]['id']));
+        answeredQuestions = Object.fromEntries(answeredQuestions.sort((a, b) => (a[1].timestamp > b[1].timestamp) ? -1 : 1))
+        notAnsweredQuestions = questions.filter(item => !answeredQuestionIds.hasOwnProperty(item[1]['id']));
+        notAnsweredQuestions = Object.fromEntries(notAnsweredQuestions.sort((a, b) => (a[1].timestamp > b[1].timestamp) ? -1 : 1))
+        allQuestions = Object.fromEntries(questions)
+    }
     return {
-        allQuestions: Object.fromEntries(questions),
-        answeredQuestions: Object.fromEntries(answeredQuestions.sort((a,b) =>(a[1].timestamp > b[1].timestamp) ? -1 : 1)),
-        notAnsweredQuestions: Object.fromEntries(notAnsweredQuestions.sort((a,b) =>(a[1].timestamp > b[1].timestamp) ? -1 : 1))
+        allQuestions: allQuestions,
+        answeredQuestions: answeredQuestions,
+        notAnsweredQuestions: notAnsweredQuestions
     };
 };
 

@@ -56,7 +56,7 @@ class QuestionCardUnAnswered extends React.Component {
         const { selectedAnswer, loading } = this.state;
         return (
             <div>
-                {loading ? (<CircularProgress/>) : (
+                {loading || Object.keys(question).length === 0 ? (<CircularProgress/>) : (
                     <FormControl component="fieldset">
                         <FormLabel component="legend">Would you rather...</FormLabel>
                         <RadioGroup aria-label="gender"

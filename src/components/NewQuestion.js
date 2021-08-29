@@ -30,7 +30,7 @@ class NewQuestion extends React.Component {
                 })
             ]).then(() => {
                 this.props.handleInitialData();
-                this.props.history.push('/leader_board')
+                this.props.history.push('/leaderboard')
             });
         }
     };

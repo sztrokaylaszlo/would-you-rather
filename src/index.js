@@ -5,14 +5,17 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './utils/Store';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </BrowserRouter>,
-  document.getElementById('root')
+    <CookiesProvider>
+        <BrowserRouter>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </BrowserRouter>
+    </CookiesProvider>,
+    document.getElementById('root')
 );
 
 reportWebVitals();

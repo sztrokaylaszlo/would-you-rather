@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { login } from '../actions/AuthUser';
 import { Redirect } from 'react-router-dom';
-
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -14,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-
+import { withCookies } from "react-cookie";
 
 const styles = theme => ({
     paper: {
@@ -37,13 +36,25 @@ const styles = theme => ({
 });
 
 class Login extends React.Component {
-
+    state = {
+        redirect: ''
+    }
     render () {
         const { classes, users, loading } = this.props;
         const handleChange = (event) => {
-            this.props.login(event.target.value)
+            this.props.login(event.target.value);
+            this.props.cookies.set('authUser', event.target.value, {path:'/'});
+            if(this.props.cookies.get('redirect')) {
+                this.setState({redirect: this.props.cookies.get('redirect')})
+                this.props.cookies.remove('redirect');
+            }
         };
-        if (this.props.authUser) {
+        if (this.props.authUser && this.state.redirect) {
+            return (
+                <Redirect to={this.state.redirect}/>
+            )
+        }
+        else if (this.props.authUser) {
             return (
                 <Redirect to="/question_list"/>
             )
@@ -112,4 +123,4 @@ const LoginDisplay = connect(
     mapDispatchLoginForm
 )(Login);
 
-export default withStyles(styles, { withTheme: true })(LoginDisplay);
+export default withStyles(styles, { withTheme: true })(withCookies(LoginDisplay));

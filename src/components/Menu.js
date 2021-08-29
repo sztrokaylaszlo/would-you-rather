@@ -31,7 +31,7 @@ class HeaderMenu extends React.Component {
         const pages = {
             '/question_list' : 'Question List',
             '/login': 'Login',
-            '/leader_board': 'Leader board',
+            '/leaderboard': 'Leader board',
             '/add': 'New question',
             '/question': 'Question'
         }
@@ -62,7 +62,7 @@ class HeaderMenu extends React.Component {
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                            <Link to='/leader_board'>
+                            <Link to='/leaderboard'>
                                 Leader board
                             </Link>
                         </MenuItem>
