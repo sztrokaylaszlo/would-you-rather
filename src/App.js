@@ -19,10 +19,7 @@ class App extends React.Component {
         this.props.handleInitialData();
     }
     render () {
-        if(!this.props.authUser && this.props.cookies.get('authUser') && window.location.pathname !=='/login'){
-            this.props.login(this.props.cookies.get('authUser'));
-        }
-        if(!this.props.cookies.get('authUser') && !this.props.cookies.get('redirect') && window.location.pathname !=='/login'){
+        if( window.location.pathname !=='/login'){
             this.props.cookies.set('redirect', window.location.pathname)
         }
 

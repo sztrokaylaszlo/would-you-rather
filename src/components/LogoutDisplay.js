@@ -8,7 +8,6 @@ class Logout extends React.Component {
 
     componentDidMount() {
         this.props.performLogout();
-        this.props.cookies.remove('authUser',{path:'/'});
         this.props.cookies.remove('redirect');
     };
     render() {

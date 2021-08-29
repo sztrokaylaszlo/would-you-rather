@@ -43,7 +43,6 @@ class Login extends React.Component {
         const { classes, users, loading } = this.props;
         const handleChange = (event) => {
             this.props.login(event.target.value);
-            this.props.cookies.set('authUser', event.target.value, {path:'/'});
             if(this.props.cookies.get('redirect')) {
                 this.setState({redirect: this.props.cookies.get('redirect')})
                 this.props.cookies.remove('redirect');
